@@ -14,7 +14,7 @@ You can also get the source from https://github.com/jamtur01/squiggle.
 
 ## Configuration
 
-squiggle has five configuration variables: 
+Squiggle has five configuration variables: 
 
     Squiggle.host          # default: localhost
     Squiggle.port          # default: 8140
@@ -22,6 +22,12 @@ squiggle has five configuration variables:
     Squiggle.key           # default: nil
     Squiggle.cert          # default: nil
     Squiggle.cacert        # default: nil
+
+You will need the key, certificate from an authenticated Puppet client (or authenticate your client 
+as a Puppet client) and the CA cert from the Puppet master you are connecting to.
+
+You will need to ensure your `/etc/puppet/auth.conf` file allows the appropriate access from that client 
+to the API path you wish to access.  You can see details on the `auth.conf` file [here](http://docs.puppetlabs.com/guides/security.html#authconf).
 
 To connect to a Puppet master at https://puppet.example.com:8140:
 
@@ -58,6 +64,8 @@ Setting up Squiggle and running `Squiggle.connect!` creates a connection object 
 Currently, only the status API is enabled:
 
     Squiggle.connection.get("/status/status")
+
+You can see details of the Puppet REST API [here](http://docs.puppetlabs.com/guides/rest_api.html).
 
 ## Copyright
 
