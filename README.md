@@ -1,0 +1,65 @@
+# Squiggle
+
+Squiggle is a squiggly Puppet API wrapper.
+
+It's named in honour of [Mr Squiggle](http://en.wikipedia.org/wiki/Mr_Squiggle)
+
+## Installation
+
+Install this beast via Rubygems:
+
+    gem install squiggle
+   
+You can also get the source from https://github.com/jamtur01/squiggle.
+
+## Configuration
+
+squiggle has five configuration variables: 
+
+    Squiggle.host          # default: localhost
+    Squiggle.port          # default: 8140
+    Squiggle.scheme        # default: https
+    Squiggle.key           # default: nil
+    Squiggle.cert          # default: nil
+    Squiggle.cacert        # default: nil
+
+To connect to a Puppet master at https://puppet.example.com:8140:
+
+    Squiggle.host = "puppet.example.com"
+    Squiggle.port = "8140"
+    Squiggle.scheme = "https"
+    Squiggle.key = "/path/to/key.pem"
+    Squiggle.cert = "/path/to/cert.pem"
+    Squiggle.cacert = "/path/to/ca_crt.pem"
+
+You can also use the squiggle.setup block if you prefer this style:
+
+    Squiggle.setup do |s|
+      s.host = "puppet.example.com"
+      s.port = "5000"
+      s.scheme = "https"
+      s.key = "/path/to/key.pem"
+      s.cert = "/path/to/cert.pem"
+      s.cacert = "/path/to/ca_crt.pem"
+    end
+
+After you have configured Squiggle, we need to create a connection:
+
+    Squiggle.connect!
+    
+If you want to reset your configiuration to their default values:
+
+    Squiggle.reset!
+
+## Usage
+
+Setting up Squiggle and running `Squiggle.connect!` creates a connection object that can then be used to send requests to your Puppet master, accessed via `Squiggle.connection`.  
+
+Currently, only the status API is enabled:
+
+    Squiggle.connection.get("/status/status")
+
+## Copyright
+
+Copyright (c) 2010 James Turnbull. See LICENSE.txt for
+further details.

@@ -1,0 +1,33 @@
+PATH
+  remote: .
+  specs:
+    squiggle (0.0.1)
+      rest-client
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    diff-lcs (1.1.2)
+    mime-types (1.16)
+    rcov (0.8.1.2.0)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
+    rspec (2.4.0)
+      rspec-core (~> 2.4.0)
+      rspec-expectations (~> 2.4.0)
+      rspec-mocks (~> 2.4.0)
+    rspec-core (2.4.0)
+    rspec-expectations (2.4.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.4.0)
+    yard (0.6.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rcov
+  rest-client
+  rspec (~> 2.4.0)
+  squiggle!
+  yard (~> 0.6.4)

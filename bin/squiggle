@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+#
+# Copyright 2010, James Turnbull
+# 
+
+$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..", "lib")))
+
+require 'rubygems'
+require 'optparse'
+require 'squiggle'
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+  # Set a banner, displayed at the top
+  # of the help screen.
+  opts.banner = 'Usage: squiggle [options] ...'
+
+  opts.separator ''
+  opts.separator 'Configuration options:'
+ 
+  options[:host] = localhost
+  opts.on( '-h', '--host HOST', 'The Puppet master host') do |host|
+    options[:host] = host
+  end
+
+  options[:port] = 8140
+  opts.on( '-p', '--port PORT', 'The Puppet master port') do |port|
+    options[:port] = port
+  end
+
+  options[:environment] = production
+  opts.on( '-e', '--environment ENVIRONMENT', 'The Puppet environment. Defaults to production.') do |environment|
+    options[:environment] = environment
+  end 
+
+  opts.separator ""
+  opts.separator "Common options:"
+ 
+  opts.on_tail('-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+end
+
+begin
+  optparse.parse!
+  Squiggle.host = options[:host]
+  Squiggle.port = options[:port]
+  Squiggle.environment = options[:environment]
+  Squiggle.configure
+rescue OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts optparse
+  exit
+end
