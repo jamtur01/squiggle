@@ -2,6 +2,12 @@ require 'squiggle/puppet'
 require 'squiggle/node'
 require 'squiggle/connection'
 require 'squiggle/status'
+require 'squiggle/crl'
+require 'squiggle/certificate'
+require 'squiggle/run'
+require 'squiggle/facts'
+require 'squiggle/certreq'
+require 'squiggle/report'
 
 module Squiggle
   class << self
