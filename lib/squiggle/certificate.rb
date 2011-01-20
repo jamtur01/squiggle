@@ -7,5 +7,6 @@ module Squiggle
 
     def self.ca(options={})
       connection.get("/certificate/ca")
+    end
   end
 end

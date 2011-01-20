@@ -71,6 +71,15 @@ module Squiggle
       )
     end
 
+    def configure
+      @host = Squiggle.host
+      @port = Squiggle.port
+      @environment = Squiggle.environment
+      @key = Squiggle.key
+      @cert = Squiggle.cert
+      @cacert = Squiggle.cacert
+    end
+
     def reset!
       @host = default_host
       @port = default_port

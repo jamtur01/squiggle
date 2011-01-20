@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-#
-# Copyright 2010, James Turnbull
-# 
 
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..", "lib")))
 
@@ -19,19 +16,35 @@ optparse = OptionParser.new do |opts|
   opts.separator ''
   opts.separator 'Configuration options:'
  
-  options[:host] = localhost
+  options[:host] = 'localhost'
   opts.on( '-h', '--host HOST', 'The Puppet master host') do |host|
     options[:host] = host
   end
 
-  options[:port] = 8140
+  options[:port] = '8140'
   opts.on( '-p', '--port PORT', 'The Puppet master port') do |port|
     options[:port] = port
   end
 
-  options[:environment] = production
+  options[:environment] = 'production'
   opts.on( '-e', '--environment ENVIRONMENT', 'The Puppet environment. Defaults to production.') do |environment|
     options[:environment] = environment
+  end 
+
+  opts.on( '-k', '--key KEY', 'The Puppet client key') do |key|
+    options[:key] = key
+  end 
+
+  opts.on( '-c', '--cert ', 'The Puppet client certificate') do |cert|
+    options[:cert] = cert
+  end 
+
+  opts.on( '-ca', '--cacert CACERT', 'The Puppet masters CA certificate') do |cacert|
+    options[:cacert] = cacert
+  end 
+
+  opts.on( '-r', '--request REQUEST', 'The Puppet API request you wish to make') do |request|
+    options[:request] = request
   end 
 
   opts.separator ""
@@ -45,10 +58,23 @@ end
 
 begin
   optparse.parse!
+  mandatory = [:key, :cert, :cacert, :request]
+  missing = mandatory.select{ |param| options[param].nil? }
+  if not missing.empty?
+    puts "Missing mandatory options: #{missing.join(', ')}"
+    puts optparse 
+    exit
+  end      
   Squiggle.host = options[:host]
   Squiggle.port = options[:port]
   Squiggle.environment = options[:environment]
+  Squiggle.key = options[:key]
+  Squiggle.cert = options[:cert]
+  Squiggle.cacert = options[:cacert]
   Squiggle.configure
+  Squiggle.connect!
+  req = Squiggle.connection.get(options[:request])
+  puts req
 rescue OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
   puts $!.to_s
   puts optparse
