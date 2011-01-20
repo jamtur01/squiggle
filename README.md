@@ -6,7 +6,7 @@ It's named in honour of [Mr Squiggle](http://en.wikipedia.org/wiki/Mr_Squiggle)
 
 ## Installation
 
-Install this beast via Rubygems:
+Install Mr Squiggle via Miss Jane or via Rubygems:
 
     gem install squiggle
    
@@ -61,9 +61,9 @@ If you want to reset your configiuration to their default values:
 
 Setting up Squiggle and running `Squiggle.connect!` creates a connection object that can then be used to send requests to your Puppet master, accessed via `Squiggle.connection`.  
 
-Currently, only the status API is enabled:
+For example to return the CA certificate:
 
-    Squiggle.connection.get("/status/status")
+    Squiggle.connection.get("/certificate/ca")
 
 You can see details of the Puppet REST API [here](http://docs.puppetlabs.com/guides/rest_api.html).
 
