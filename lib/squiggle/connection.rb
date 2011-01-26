@@ -15,21 +15,39 @@ module Squiggle
     end
 
     def get(path, headers={})
-      response = RestClient::Request.execute(
-        :method => :GET,
-        :url => "#{@url}#{path}",
-        :headers => build_headers(:GET, path, headers)
-      )
+      begin
+        RestClient.get(
+          "#{@url}#{path}", 
+          build_headers(:GET, path, headers)
+        )
+      rescue => e
+        e.response
+      end
     end
 
     def put(path, payload, headers={})
-      response = RestClient::Request.execute(
-        :method => :PUT,
-        :url => "#{@url}#{path}",
-        :headers => build_headers(:PUT, path, headers, YAML.generate(payload)),
-        :payload => YAML.generate(payload)
-      )
+      begin
+        RestClient.put(
+          "#{@url}#{path}",
+          YAML.generate(payload),
+          build_headers(:PUT, path, headers, YAML.generate(payload))
+        )
+      rescue => e
+        e.response
+      end
     end
+
+    def head(path, payload, headers={})
+      begin
+        RestClient.head(
+          "#{@url}#{path}",
+          YAML.generate(payload),
+          build_headers(:HEAD, path, headers, YAML.generate(payload))
+        )   
+      rescue => e
+        e.response
+      end 
+    end 
 
     private
 
