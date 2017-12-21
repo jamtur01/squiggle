@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "squiggle"
   
-  s.add_dependency "rest-client"
+  s.add_dependency "rest-client", ~> 1.7.3
   
-  s.add_development_dependency "yard", "~> 0.6.4"
+  s.add_development_dependency "yard", "~> 0.9.11"
   s.add_development_dependency "rspec", "~> 2.4.0"
   s.add_development_dependency "rcov"
   
